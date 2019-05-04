@@ -1,0 +1,24 @@
+{
+  "name": "assignment7-awalte11",
+  "version": "1.0.0",
+  "description": "Assign 7",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tucosc484/assignment-7-awalte11.git"
+  },
+  "author": "Alex Walters",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tucosc484/assignment-7-awalte11/issues"
+  },
+  "homepage": "https://github.com/tucosc484/assignment-7-awalte11#readme",
+  "dependencies": {
+    "@types/node": "^12.0.0",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5"
+  }
+}
