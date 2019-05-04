@@ -1,5 +1,37 @@
 // lib/app.ts
-import * as express from "express";
+import { MongoClient } from "mongodb";
+import { OrdersDatastore } from "./datastore";
+import * as express from 'express';
+import * as morgan from 'morgan';
+import { Request, Response } from 'express';
+
+const bodyParser = require('body-parser');
+
+OrdersDatastore
+  .connect()
+  .then((client: MongoClient) => {
+    const ordersDatastore = new OrdersDatastore(client);
+    startServer(ordersDatastore);
+  });
+  
+function startServer(ordersDatastore: OrdersDatastore) {
+  const app = express();
+
+  app.use(morgan('dev'));
+
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+
+  const port = process.env.PORT || 3000;
+  
+    app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}
+  
+  
+
+/*import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Routes } from "./routes";
 import * as mongoose from "mongoose";
@@ -35,4 +67,4 @@ class App {
 
 }
 
-export default new App().app;
+export default new App().app;*/
