@@ -18,7 +18,7 @@ var port = process.env.PORT || 5000;
 
     
   
-
+/*
 TasksDatastore
   .connect()
   .then((client: MongoClient) => {
@@ -46,7 +46,7 @@ function startServer(tasksDatastore: TasksDatastore) {
 });
   
 }
-  
+  */
   
 
 /*import * as express from "express";
