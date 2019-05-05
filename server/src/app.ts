@@ -1,22 +1,22 @@
 // lib/app.ts
 import { MongoClient } from "mongodb";
-import { OrdersDatastore } from "./datastore";
+import { TasksDatastore } from "./datastore";
 import * as express from 'express';
 import * as morgan from 'morgan';
 import { Request, Response } from 'express';
 
 const bodyParser = require('body-parser');
 
-OrdersDatastore
+TasksDatastore
   .connect()
   .then((client: MongoClient) => {
-    const ordersDatastore = new OrdersDatastore(client);
-    startServer(ordersDatastore);
+    const tasksDatastore = new TasksDatastore(client);
+    startServer(tasksDatastore);
   });
   
-function startServer(ordersDatastore: OrdersDatastore) {
+function startServer(tasksDatastore: TasksDatastore) {
   const app = express();
-
+  
   app.use(morgan('dev'));
 
   app.use(bodyParser.urlencoded({ extended: true }));
