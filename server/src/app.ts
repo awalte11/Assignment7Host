@@ -27,14 +27,14 @@ TasksDatastore
     startServer(tasksDatastore);
   });
   
-
+  app.get('/', function (req, res) {
+    res.send('Hello World!, Server is running on port ${port}');
+  });
 
 function startServer(tasksDatastore: TasksDatastore) {
 
 
-  app.get('/', function (req, res) {
-    res.send('Hello World!, Server is running on port ${port}');
-  });
+
 
 
   
