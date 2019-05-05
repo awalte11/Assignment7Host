@@ -9,11 +9,15 @@ const bodyParser = require('body-parser');
 
 var app = express();
 
+var port = process.env.PORT || 5000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
-var port = process.env.PORT || 5000;
 
 
     
@@ -37,9 +41,7 @@ function startServer(tasksDatastore: TasksDatastore) {
   app.use(bodyParser.json());
   
 
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-  });
+  
   
   app.get('/', function (req, res) {
   res.send(`Server is running on port ${port}`);
