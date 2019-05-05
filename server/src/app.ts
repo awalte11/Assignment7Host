@@ -32,9 +32,11 @@ TasksDatastore
 function startServer(tasksDatastore: TasksDatastore) {
 
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+  app.get('/', function (req, res) {
+    res.send('Hello World!, Server is running on port ${port}');
+  });
+
+
   
   app.use(morgan('dev'));
 
@@ -44,9 +46,7 @@ app.get('/', function (req, res) {
 
   
   
-  app.get('/', function (req, res) {
-  res.send(`Server is running on port ${port}`);
-});
+
   
 }
  
