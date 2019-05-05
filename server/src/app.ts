@@ -7,17 +7,15 @@ import { Request, Response } from 'express';
 
 const bodyParser = require('body-parser');
 
-  var app2 = express();
+var app = express();
 
-app2.get('/', function (req, res) {
+app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
 var port = process.env.PORT || 5000;
 
-  app2.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-  });
+
     
   
 
@@ -38,11 +36,14 @@ function startServer(tasksDatastore: TasksDatastore) {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
   
-  //var port = process.env.PORT || 5000;
-/*
+
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-  });*/
+  });
+  
+  app.get('/', function (req, res) {
+  res.send(`Server is running on port ${port}`);
+});
   
 }
   
