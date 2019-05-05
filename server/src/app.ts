@@ -14,11 +14,7 @@ TasksDatastore
     startServer(tasksDatastore);
   });
   
-    var port = process.env.PORT || 5000;
-  
-   app.listen(port, () => {
-    console.log('Server is running on port ${port}');
-  });
+    
   
 
 function startServer(tasksDatastore: TasksDatastore) {
@@ -28,8 +24,13 @@ function startServer(tasksDatastore: TasksDatastore) {
 
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
+  
+  var port = process.env.PORT || 5000;
 
-
+  app.listen(port, () => {
+    console.log('Server is running on port ${port}');
+  });
+  
 }
   
   
