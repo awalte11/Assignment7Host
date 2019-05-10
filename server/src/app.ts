@@ -57,12 +57,10 @@ function startServer(tasksDatastore: TasksDatastore) {
     try {
       const task = await tasksDatastore.readOneTask(id);
       response.json({ task });
-    } catch (error) {
-      response.sendStatus(500);
+      } catch (error) {
+      
+      response.status(500).json(id);
     }
-
-    
-    
   });
 
   
