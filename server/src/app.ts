@@ -46,22 +46,24 @@ function startServer(tasksDatastore: TasksDatastore) {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
   
-  app.get('/api/tasks', async (request: Request, response: Response) => {
-    const tasks = await tasksDatastore.readAllTasks();
-    
-    response.json({ tasks });
-  });
-
   app.get('/api/tasks/:id', async (request: Request, response: Response) => {
     const id = request.params.id;
     try {
-      const task = await tasksDatastore.readOneTask(id);
+      const task = await tasksDatastore.readAllTasks();
       response.json({ task });
       } catch (error) {
       
       response.status(500).json(id);
     }
   });
+
+  app.get('/api/tasks', async (request: Request, response: Response) => {
+    const tasks = await tasksDatastore.readAllTasks();
+    
+    response.json({ tasks });
+  });
+
+
 
   
   app.get('/', function (req, res) {
