@@ -8,14 +8,7 @@ import { Request, Response } from 'express';
 const bodyParser = require('body-parser');
 
 
-var app = express();
 
-var port = process.env.PORT || 5000;
-
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});//Why is this up here? Because heroku explodes if it's not. r
 
   
   
@@ -37,7 +30,14 @@ TasksDatastore
 function startServer(tasksDatastore: TasksDatastore) {
 
 
+  var app = express();
 
+  var port = process.env.PORT || 5000;
+  
+  
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });//Why is this up here? Because heroku explodes if it's not. r
 
  
   
