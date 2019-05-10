@@ -49,7 +49,7 @@ function startServer(tasksDatastore: TasksDatastore) {
   app.get('/api/tasks/:id', async (request: Request, response: Response) => {
     const id = request.params.id;
     try {
-      const task = await tasksDatastore.readAllTasks();
+      const task = await tasksDatastore.readOneTask(id);
       response.json({ task });
       } catch (error) {
       
