@@ -5,10 +5,10 @@ dotenv.config();
 const URL = process.env.URL || '';
 
 export class TasksDatastore {
-  orders: Collection;
+  tasks: Collection;
 
   constructor(client: MongoClient) {
-    this.orders = client.db().collection('tasks');
+    this.tasks = client.db().collection('tasks');
   }
   
   static async connect() {
@@ -20,11 +20,11 @@ export class TasksDatastore {
         resolve(client);
       }));
   }
-/*
-  async readAllOrders() {
-    return await this.orders.find({}).toArray();
-  }
 
+  async readAllTasks() {
+    return await this.tasks.find({}).toArray();
+  }
+  /*
   async createOrder(name: string) {
     await this.orders.insertOne({ name });
   }

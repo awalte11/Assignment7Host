@@ -27,9 +27,7 @@ TasksDatastore
     startServer(tasksDatastore);
   });
   
-  app.get('/', function (req, res) {
-    res.send('Hello World!, Server is running on port ${port}');
-  });
+  
 
 function startServer(tasksDatastore: TasksDatastore) {
 
@@ -43,7 +41,14 @@ function startServer(tasksDatastore: TasksDatastore) {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
   
+  app.get('/', function (req, res) {
+    res.send('Hello World!, Server is running on port ${port}');
+  });
 
+  app.get('/api/tasks', async (request: Request, response: Response) => {
+    const tasks = await tasksDatastore.readAllTasks();
+    response.json({ tasks });
+  });
   
   
 
