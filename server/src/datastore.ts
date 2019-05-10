@@ -28,13 +28,20 @@ export class TasksDatastore {
   async readAllTasks() {
     return await this.tasks.find({}).toArray();
   }
-  /*
-  async createOrder(name: string) {
-    await this.orders.insertOne({ name });
+
+  
+  async readOneTask(id: string) {
+    return await this.tasks.find({_id: new ObjectId(id)}).toArray();
   }
 
-  async deleteOrder(id: string) {
-    await this.orders.deleteOne({ _id: new ObjectId(id) });
+  async deleteTask(id: string) {
+    await this.tasks.deleteOne({ _id: new ObjectId(id) });
   }
-  */
+  
+  async createOrder(name: string) {
+    await this.tasks.insertOne({ name });
+  }
+
+
+  
 }

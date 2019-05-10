@@ -51,6 +51,20 @@ function startServer(tasksDatastore: TasksDatastore) {
     
     response.json({ tasks });
   });
+
+  app.get('/api/tasks/:id', async (request: Request, response: Response) => {
+    const id = request.params.id;
+    try {
+      const task = await tasksDatastore.readOneTask(id);
+      response.json({ task });
+    } catch (error) {
+      response.sendStatus(500);
+    }
+
+    
+    
+  });
+
   
   app.get('/', function (req, res) {
     res.send('Hello World!, Server is running on port ${port}');
