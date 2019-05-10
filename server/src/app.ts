@@ -14,7 +14,9 @@ var port = process.env.PORT || 5000;
 
 
 
-    
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});//Why is this up here? Because heroku explodes if it's not. 
   
 
 TasksDatastore
@@ -48,9 +50,7 @@ function startServer(tasksDatastore: TasksDatastore) {
     res.send('Hello World!, Server is running on port ${port}');
   });
 
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-  });//Why is this up here? Because heroku explodes if it's not. 
+
 
   
 }
