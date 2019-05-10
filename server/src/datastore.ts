@@ -38,8 +38,18 @@ export class TasksDatastore {
     await this.tasks.deleteOne({ _id: new ObjectId(id) });
   }
   
-  async createOrder(name: string) {
-    await this.tasks.insertOne({ name });
+  async createTask(descriptionIn: string) {
+    var now = new Date();
+    console.log(now);
+    var newTask = {
+      description : descriptionIn,
+      isComplete : false,
+      dateCreated : now,
+      dateCompleted : null
+
+    }
+    var test = await this.tasks.insertOne({ newTask });
+    return test.ops[0];
   }
 
 

@@ -53,7 +53,11 @@ function startServer(tasksDatastore: TasksDatastore) {
       response.json({ task });
       } catch (error) {
       
-      response.status(500).json(id);
+        response.status(404).json({
+          "paramaterName" : "id",
+          "paramaterValue" : id,   
+          "errorText" : "No task for this id."
+      }).send();
     }
   });
 
@@ -64,13 +68,35 @@ function startServer(tasksDatastore: TasksDatastore) {
   });
 
 
-
+  
   
   app.get('/', function (req, res) {
     res.send('Hello World!, Server is running on port ${port}');
   });
 
- 
+  app.post('/api/tasks', async (request, response) => {
+    const description = request.body.description;
+    if(!description || description == "" )// doing this here to catch empty descriptions
+    {
+      response.status(400).json({
+            "paramaterName" : "description",
+            "paramaterValue" : null,
+            "errorText" : "Description must not be null or empty."
+        })
+    }
+    else {
+      
+        var out = await tasksDatastore.createTask(description);
+        console.log (out._id);
+        
+        response.status(201).json({
+          "ID" : out._id
+
+        }) 
+         
+      
+    }
+  });
   
 }
  
