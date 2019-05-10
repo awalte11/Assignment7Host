@@ -4,11 +4,15 @@ dotenv.config();
 
 const URL = process.env.URL || '';
 
+
 export class TasksDatastore {
+  database;
   tasks: Collection;
 
   constructor(client: MongoClient) {
-    this.tasks = client.db().collection('tasks');
+
+    this.database = client.db("")
+    this.tasks = client.db("homework").collection('tasks');
   }
   
   static async connect() {

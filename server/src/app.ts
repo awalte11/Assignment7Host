@@ -7,16 +7,12 @@ import { Request, Response } from 'express';
 
 const bodyParser = require('body-parser');
 
-var app = express();
-
-var port = process.env.PORT || 5000;
 
 
 
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});//Why is this up here? Because heroku explodes if it's not. 
+
+  
   
 
 TasksDatastore
@@ -24,6 +20,10 @@ TasksDatastore
   .then((client: MongoClient) => {
     const tasksDatastore = new TasksDatastore(client);
     startServer(tasksDatastore);
+  })
+  .catch(error => {
+    console.error("Uh-oh, couldn't connect to Mongo", error);
+    process.exit();
   });
   
 
@@ -31,10 +31,12 @@ TasksDatastore
 
 function startServer(tasksDatastore: TasksDatastore) {
 
+  var app = express();
+
+  var port = process.env.PORT || 5000;
 
 
-
-
+ 
   
   app.use(morgan('dev'));
 
@@ -43,6 +45,7 @@ function startServer(tasksDatastore: TasksDatastore) {
   
   app.get('/api/tasks', async (request: Request, response: Response) => {
     const tasks = await tasksDatastore.readAllTasks();
+    
     response.json({ tasks });
   });
   
@@ -50,7 +53,9 @@ function startServer(tasksDatastore: TasksDatastore) {
     res.send('Hello World!, Server is running on port ${port}');
   });
 
-
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });//Why is this up here? Because heroku explodes if it's not. r
 
   
 }
