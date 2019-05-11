@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task';
 import { OnInit } from '@angular/core';
-const request = require('request');
+import * as request from "request-promise-native";
 const targetApp = 'https://webdevapp7.herokuapp.com/api/tasks';
 
 @Injectable({
