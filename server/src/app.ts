@@ -50,14 +50,23 @@ function startServer(tasksDatastore: TasksDatastore) {
     const id = request.params.id;
     try {
       const task = await tasksDatastore.readOneTask(id);
-      response.json({ task });
+      if (task == null)//because *somehow* catch isn't working. damnit js.
+        {
+          response.status(404).json({
+           "paramaterName" : "id",
+            "paramaterValue" : id,   
+            "errorText" : "No task for this id."
+           });
+       }
+       else
+         response.json({ task });
       } catch (error) {
       
         response.status(404).json({
           "paramaterName" : "id",
           "paramaterValue" : id,   
           "errorText" : "No task for this id."
-      }).send();
+      });
     }
   });
 
@@ -68,7 +77,20 @@ function startServer(tasksDatastore: TasksDatastore) {
   });
 
 
-  
+  app.delete('/api/tasks/:id', async (request, response) => {
+    const id = request.params.id;
+    try {
+      await tasksDatastore.deleteTask(id);
+      response.sendStatus(204);
+    } catch (error) {
+            
+      response.status(404).json({
+        "paramaterName" : "id",
+        "paramaterValue" : id,   
+        "errorText" : "No task for this id."
+      }).send();
+    }
+  });
   
   app.get('/', function (req, res) {
     res.send('Hello World!, Server is running on port ${port}');

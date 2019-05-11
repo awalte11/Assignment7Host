@@ -31,11 +31,22 @@ export class TasksDatastore {
 
   
   async readOneTask(id: string) {
-    return await this.tasks.find({_id: new ObjectId(id)}).toArray();
+    try {
+    return await this.tasks.find({_id: new ObjectId(id)}, function(err, result) {
+      if (err) return err;
+      else return result;
+      }).toArray();
+      
+    }
+    catch
+    {
+
+    }
   }
 
   async deleteTask(id: string) {
-    await this.tasks.deleteOne({ _id: new ObjectId(id) });
+    const test = await this.tasks.deleteOne({ _id: new ObjectId(id) });
+    console.log(test);
   }
   
   async createTask(descriptionIn: string) {
