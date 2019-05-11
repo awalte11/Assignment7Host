@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { OnInit } from '@angular/core';
-import * as request from "request-promise-native";
+import { Observable } from 'rxjs';
+
+
+
 const targetApp = 'https://webdevapp7.herokuapp.com/api/tasks';
 
 @Injectable({
@@ -18,7 +23,13 @@ const targetApp = 'https://webdevapp7.herokuapp.com/api/tasks';
  */
 export class TaskService implements OnInit {
 
-  public tasks: Task[];
+  constructor(private http : HttpClient) {
+    this.tasks = this.getAllTasks();
+
+ }
+
+
+  public tasks: Observable<Task[]>;
   key = 'storage';
 
   /**
@@ -26,16 +37,12 @@ export class TaskService implements OnInit {
    * What the foreach does is turn the string-ified version that's in the JSON back into a date object
    * the if statement prevents null date-complete entries being treated as time zero
    */
-  constructor() {
-      this.tasks = this.getAllTasks();
-
-   }
 
   /**
    * This makes the task and puts it into the JSON
    * @param desc - user input desc goes here
    */
-  CreateTask(desc: string): void {
+  CreateTask(desc: string): void {/*
       request.post(targetApp + '/', {
       json : {
         description : desc
@@ -48,14 +55,14 @@ export class TaskService implements OnInit {
       };
 
     });
-    this.updateTasks();
+    this.updateTasks();*/
   }
 
 
     /**
      * Kills tasks
      */
-    DeleteTask(id: string): void {
+    DeleteTask(id: string): void {/*
       request.delete(targetApp + '/' + id, (error, res, body) => {
         if (error) {
           console.error(error)
@@ -63,7 +70,7 @@ export class TaskService implements OnInit {
         }
         
       });
-      this.updateTasks();
+      this.updateTasks();*/
     }
 
     /**
@@ -72,7 +79,7 @@ export class TaskService implements OnInit {
      * @param id the task to work on
      * @param complete determines if it's setting complete or not
      */
-    updateTask(newDesc: string, taskToChange: Task, complete: boolean): void {
+    updateTask(newDesc: string, taskToChange: Task, complete: boolean): void {/*
       request.patch(targetApp + '/' + taskToChange.id, {
         json : {
           description : newDesc,
@@ -85,31 +92,34 @@ export class TaskService implements OnInit {
         }
         
       });
-      this.updateTasks();
+      this.updateTasks();*/
     }
 
     /**
      * Get one task by ID
      * @param id  ID number
      */
+    /*
     getTask(id: string): Task {
         let outTask: Task;
+        
         outTask = this.tasks.find(task => task.id === id);
 
         return outTask;
-    }
+    }*/
 
-    updateTasks() {
-      this.tasks = this.getAllTasks();
-    }
+
 
     /**
      * Gets all the task
      */
-    getAllTasks(): Task[] {
-        return request.get(targetApp + '/');
+    getAllTasks(): Observable<Task[]> {
+      return this.http.get<Task[]>(targetApp);
     }
 
     ngOnInit() {
+      console.log("before getall");
+      this.tasks = this.getAllTasks();
+      console.log(this.tasks.subscribe.length);
     }
 }

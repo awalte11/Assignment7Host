@@ -1,3 +1,31 @@
-<p>
-  task-details works!
-</p>
+<div *ngIf="update; else viewBlock" id="taskDisplay">
+  Update Task<br>
+  Task ID: {{task.id}}
+  <br>
+  <label>Description:
+      <input [(ngModel)]="desc" placeholder="desc"/>
+  </label>
+  Description: {{task.description}}
+  <br>
+  Date Created: {{task.dateCreated}}
+  <br>
+  Completed:
+  <label class="switch">
+        <input [(ngModel)]="complete" type="checkbox">
+  </label>
+  <br>
+  Date Completed: {{task.dateCompleted}} 
+  <br>
+  <button (click)="updateTask()">Update Task</button>
+  <a routerLink=""> <button>Cancel</button> </a>
+</div>
+   
+<ng-template #viewBlock>
+  Task ID: {{task.id}}
+  <br>
+  Description: {{task.description}}
+  <br>
+  Date Created: {{task.dateCreated}}
+  <br>
+  {{parseComplete()}}
+</ng-template>

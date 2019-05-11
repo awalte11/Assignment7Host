@@ -1,3 +1,6 @@
-<p>
-  task-list works!
-</p>
+<div *ngFor="let task of tasks" >
+  <app-task-list-item [task]="task"></app-task-list-item>
+  <br>
+</div>
+
+<a routerLink="create"> <button>Create New Task</button> </a>
