@@ -96,7 +96,47 @@ function startServer(tasksDatastore: TasksDatastore) {
     res.send('Hello World!, Server is running on port ${port}');
   });
 
+  app.patch('/api/tasks/:id', async (request, response) => {
+    console.log("Update Start");
+    const id = request.params.id;
+    if(request.body.description == "" || request.body.description == null)// catch empty descriptions
+    {
+        response.status(400).json({
+            "paramaterName" : "description",
+            "paramaterValue" : null,
+            "errorText" : "Description must not be null or empty."
+        }).send();
+    }
+    else if (request.body.isComplete == null) { //catch null is-complete
+        response.status(400).json({
+            "paramaterName" : "isComplete",
+            "paramaterValue" : request.body.isComplete,  
+            "errorText" : "IsComplete must not be null."
+        }).send();
+    }
+    else
+    {
+      var update = {
+        $set : {
+          description : request.body.description,
+          isComplete : request.body.isComplete,
+          dateCompleted : null
+        }
+      }
+      if (request.body.isComplete)
+      {
+        update.$set.dateCompleted = new Date();
+      }
+
+      console.log("Right before update");
+      var out = tasksDatastore.updateTask(id, update);
+      response.status(204).send();
+    }
+  
+  });
+
   app.post('/api/tasks', async (request, response) => {
+    console.log("post");
     const description = request.body.description;
     if(!description || description == "" )// doing this here to catch empty descriptions
     {

@@ -6,6 +6,7 @@ const URL = process.env.URL || '';
 
 
 export class TasksDatastore {
+
   database;
   tasks: Collection;
 
@@ -48,10 +49,14 @@ export class TasksDatastore {
     const test = await this.tasks.deleteOne({ _id: new ObjectId(id) });
     console.log(test);
   }
+
+  async updateTask(id: string, updateInfo : any) {
+    
+    return await this.tasks.updateOne({ _id: new ObjectId(id) }, updateInfo);
+  }
   
   async createTask(descriptionIn: string) {
     var now = new Date();
-    console.log(now);
     var newTask = {
       description : descriptionIn,
       isComplete : false,

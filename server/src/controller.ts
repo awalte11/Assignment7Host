@@ -43,8 +43,6 @@ export class TaskController{
         
     }
 
-    
-
     //gets one task from the db
     public getTaskWithID (req: Request, res: Response) {
          
