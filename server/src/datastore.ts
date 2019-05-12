@@ -64,7 +64,7 @@ export class TasksDatastore {
       dateCompleted : null
 
     }
-    var test = await this.tasks.insertOne({ newTask });
+    var test = await this.tasks.insertOne( newTask);
     return test.ops[0];
   }
 

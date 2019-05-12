@@ -14,7 +14,7 @@ export class TaskListComponent implements OnInit {
 
   constructor(private taskService: TaskService) { }
 
-  tasks: Task[];
+  tasks: any = [];
 
   /**
    * Gets tasks from the service
@@ -23,7 +23,7 @@ export class TaskListComponent implements OnInit {
     console.log("At tlc getTasks");
 
     this.tasks = []
-    this.taskService.getAllTasks().subscribe(tasks => this.tasks = tasks);
+    this.taskService.getAllTasks().subscribe((tasks : {} ) => this.tasks = tasks);
   }
 
   /**

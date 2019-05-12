@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { HttpClientModule } from '@angular/common/http';
+import * as cors from 'cors';
 import { OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
 
 
-
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  })
+};
 const targetApp = 'https://webdevapp7.herokuapp.com/api/tasks';
-
+//const targetApp = 'http://localhost:5000/api/tasks';
 @Injectable({
   providedIn: 'root'
 })
+
+
 
 
 /** For Task Logic
@@ -27,9 +35,13 @@ export class TaskService implements OnInit {
     this.tasks = this.getAllTasks();
 
  }
+ private extractData(res: Response) {
+  let body = res;
+  return body || { };
+}
 
 
-  public tasks: Observable<Task[]>;
+  public tasks: Observable<Object[]>;
   key = 'storage';
 
   /**
@@ -113,8 +125,9 @@ export class TaskService implements OnInit {
     /**
      * Gets all the task
      */
-    getAllTasks(): Observable<Task[]> {
-      return this.http.get<Task[]>(targetApp);
+    getAllTasks(): Observable<any> {
+      console.log(targetApp);
+      return this.http.get(targetApp).pipe(map(this.extractData));
     }
 
     ngOnInit() {

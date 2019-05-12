@@ -3,6 +3,7 @@ import { MongoClient } from "mongodb";
 import { TasksDatastore } from "./datastore";
 import * as express from 'express';
 import * as morgan from 'morgan';
+import * as cors from 'cors';
 import { Request, Response } from 'express';
 
 const bodyParser = require('body-parser');
@@ -31,7 +32,7 @@ function startServer(tasksDatastore: TasksDatastore) {
 
 
   var app = express();
-
+ 
   var port = process.env.PORT || 5000;
   
   
@@ -40,13 +41,20 @@ function startServer(tasksDatastore: TasksDatastore) {
   });//Why is this up here? Because heroku explodes if it's not. r
 
  
+  app.use(cors({credentials: true, origin: true}));
+  app.use(function(request, response, next) {
+    response.header("Access-Control-Allow-Origin", '*');
+    response.header("Access-Control-Allow-Credentials", 'true');
+    response.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    response.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept, content-type, application/json');
+    next();
+});
+ 
   
-  app.use(morgan('dev'));
-
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
   
-  app.get('/api/tasks/:id', async (request: Request, response: Response) => {
+  app.get('/api/tasks/:id', cors(), async (request: Request, response: Response, next) => {
     const id = request.params.id;
     try {
       const task = await tasksDatastore.readOneTask(id);
@@ -70,10 +78,10 @@ function startServer(tasksDatastore: TasksDatastore) {
     }
   });
 
-  app.get('/api/tasks', async (request: Request, response: Response) => {
+  app.get('/api/tasks', cors(), async (request: Request, response: Response, next) => {
     const tasks = await tasksDatastore.readAllTasks();
     
-    response.json({ tasks });
+    response.json( tasks );
   });
 
 
