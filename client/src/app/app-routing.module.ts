@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
  */
 const routes: Routes = [
     { path: '', redirectTo : '/tasks', pathMatch: 'full'},
+    { path: 'client', redirectTo : '/tasks', pathMatch: 'full'},
     { path: 'tasks', component: TaskListComponent},
     { path: 'tasks/create', component: CreateTaskComponent},
     { path: 'tasks/:id', component: TaskDetailsComponent}
